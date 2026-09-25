@@ -12,15 +12,17 @@ from mcp import ClientSession, StdioServerParameters
 from mcp.client.stdio import stdio_client
 from langchain_anthropic import ChatAnthropic
 
-
 # llm = ChatOpenAI()
 llm = ChatAnthropic(model="claude-opus-5", temperature=0)
 
 
 stdio_server_params = StdioServerParameters(
     command="python",
-    args=["/Users/vsahare/Desktop/Vishal/Personal/Vishal/Padhai/Udemy/EdemMCPServerCourse/mcp-servers/langchain-mcp-adapters-usage/servers/math_server.py"],
+    args=[
+        "/Users/vsahare/Desktop/Vishal/Personal/Vishal/Padhai/Udemy/EdemMCPServerCourse/mcp-servers/langchain-mcp-adapters-usage/servers/math_server.py"
+    ],
 )
+
 
 async def main():
     print("Hello from langchain-mcp-adapters-usage!")
@@ -35,8 +37,11 @@ async def main():
 
             agent = create_agent(llm, tools)
 
-            response = await agent.ainvoke({"messages": [HumanMessage(content="What is 2+2?")]})
+            response = await agent.ainvoke(
+                {"messages": [HumanMessage(content="What is 2+2?")]}
+            )
             print(response["messages"][-1].content)
+
 
 if __name__ == "__main__":
     asyncio.run(main())
